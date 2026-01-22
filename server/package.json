@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "npx prisma db push --accept-data-loss && node src/index.js",
+    "postinstall": "npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.7.1",
@@ -19,11 +20,11 @@
     "express-validator": "^7.0.1",
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.7.1",
     "stripe": "^14.10.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
-    "prisma": "^5.7.1"
+    "nodemon": "^3.0.2"
   }
 }

@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  name         String
+  address      String?
+  city         String?
+  state        String?
+  zipCode      String?
+  country      String?
+  credits      Float         @default(40.00)
+  role         String        @default("employee")
+  refreshToken String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  orders       Order[]
+  cartItems    CartItem[]
+  transactions Transaction[]
+}
+
+model Item {
+  id          String      @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  category    String
+  imageUrl    String
+  stock       Int         @default(100)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[]
+  cartItems   CartItem[]
+}
+
+model CartItem {
+  id        String   @id @default(uuid())
+  userId    String
+  itemId    String
+  quantity  Int      @default(1)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  item      Item     @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemId])
+}
+
+model Order {
+  id              String      @id @default(uuid())
+  userId          String
+  status          String      @default("pending")
+  totalAmount     Float
+  shippingAddress String
+  shippingCity    String
+  shippingState   String
+  shippingZip     String
+  shippingCountry String
+  trackingNumber  String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  user            User        @relation(fields: [userId], references: [id])
+  orderItems      OrderItem[]
+  shipment        Shipment?
+}
+
+model OrderItem {
+  id              String   @id @default(uuid())
+  orderId         String
+  itemId          String
+  quantity        Int
+  priceAtPurchase Float
+  createdAt       DateTime @default(now())
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  item            Item     @relation(fields: [itemId], references: [id])
+}
+
+model Transaction {
+  id              String   @id @default(uuid())
+  userId          String
+  type            String
+  amount          Float
+  stripePaymentId String?
+  description     String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model Shipment {
+  id                String    @id @default(uuid())
+  orderId           String    @unique
+  trackingNumber    String    @unique
+  carrier           String    @default("SwagShip Express")
+  status            String    @default("processing")
+  originLat         Float
+  originLng         Float
+  destLat           Float
+  destLng           Float
+  currentLat        Float
+  currentLng        Float
+  estimatedDelivery DateTime?
+  lastUpdated       DateTime  @default(now())
+  order             Order     @relation(fields: [orderId], references: [id])
+}

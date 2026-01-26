@@ -68,16 +68,29 @@ function CheckoutForm({ selectedAmount, onSuccess }) {
 
       <div className="form-group">
         <label className="form-label">Card Details</label>
-        <div className="stripe-element">
+        <div
+          className="stripe-element"
+          style={{
+            minHeight: '50px',
+            padding: '12px',
+            display: 'flex',
+            alignItems: 'center'
+          }}
+        >
           <CardElement
             options={{
               style: {
                 base: {
                   fontSize: '16px',
                   color: '#202124',
+                  lineHeight: '24px',
                   '::placeholder': { color: '#80868b' }
+                },
+                invalid: {
+                  color: '#dc3545'
                 }
-              }
+              },
+              hidePostalCode: true
             }}
           />
         </div>

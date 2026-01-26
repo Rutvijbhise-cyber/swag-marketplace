@@ -1185,11 +1185,21 @@ img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
-  min-height: 44px;
+  min-height: 50px;
+}
+
+.stripe-element > div {
+  width: 100%;
 }
 
 .stripe-element iframe {
+  width: 100% !important;
   height: 100% !important;
+  min-height: 24px !important;
+}
+
+.StripeElement {
+  width: 100%;
 }
 
 .stripe-element--focus {

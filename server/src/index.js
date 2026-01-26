@@ -130,12 +130,14 @@ app.use(helmet({
   contentSecurityPolicy: isProduction ? {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://js.stripe.com", "https://m.stripe.network"],
+      scriptSrc: ["'self'", "https://js.stripe.com", "https://m.stripe.network", "https://api.mapbox.com", "blob:"],
       frameSrc: ["'self'", "https://js.stripe.com", "https://hooks.stripe.com", "https://m.stripe.network"],
-      connectSrc: ["'self'", "https://api.stripe.com", "https://m.stripe.network", "https://api.mapbox.com", "https://*.tiles.mapbox.com"],
+      connectSrc: ["'self'", "https://api.stripe.com", "https://m.stripe.network", "https://api.mapbox.com", "https://*.tiles.mapbox.com", "https://events.mapbox.com"],
       imgSrc: ["'self'", "data:", "https:", "blob:"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       fontSrc: ["'self'", "data:"],
+      workerSrc: ["'self'", "blob:"],
+      childSrc: ["blob:"],
     }
   } : false
 }));

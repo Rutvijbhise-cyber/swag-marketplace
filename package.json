@@ -8,7 +8,7 @@
     "dev:server": "cd server && npm run dev",
     "dev:client": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "start": "cd server && npm start",
+    "start": "cd server && npx prisma db push --accept-data-loss && npm start",
     "postinstall": "cd server && npm install && cd ../client && npm install && cd ../server && npx prisma generate",
     "db:push": "cd server && npx prisma db push",
     "db:seed": "cd server && node prisma/seed.js",

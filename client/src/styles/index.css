@@ -1185,6 +1185,11 @@ img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
+  min-height: 44px;
+}
+
+.stripe-element iframe {
+  height: 100% !important;
 }
 
 .stripe-element--focus {
